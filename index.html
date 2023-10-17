@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Emmanuel Mbulu, emmanuel.mbulu@gmail.com">
+        <meta name="description" content="Simple Calculator Improved of Web Application Programing assignments by Emmanuel">
+        <meta name="keywords" content="MIU, WAP, DE Course">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="X-UA-Compatible" content="IE=7">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Intro React - Basic Counter</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="libraries/react.development.js"></script>
+        <script src="libraries/react-dom.development.js"></script>
+        <script src="libraries/babel.min.js"></script>
+        <script src="libraries/prop-types.js"></script>
+    </head>
+    <body>
+        <div id="container" class="container mt-3 mb-3"></div>
+    <script type="text/babel">
+
+        class Button extends React.Component {
+
+            constructor(props) {
+                super(props);
+
+                const {text:value, bootstrapClass:bootstrap, handleClik} = props;
+                this.text = value;
+                this.bootstrapClass = bootstrap;
+                this.onClick = handleClik;
+            }
+
+            render() {
+                return (
+                    <button onClick={this.onClick} className={'btn ' + this.bootstrapClass}>{this.text}</button>
+                );
+            }
+        }
+
+        class Text extends React.Component {
+            constructor(props) {
+                super(props);
+
+                this.state = {value: 0};
+            }
+
+            render() {
+                return <h1 className="display-1">{this.state.value}</h1>
+            }
+
+            setValue = (data) => {
+                console.log("New value", data);
+                this.setState({value: data});
+            }
+        }
+
+        class BasicCounter extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {counter: 0};
+                this.textView = null;
+            }
+
+            getTextView = (component) => {
+                this.textView = component;
+            }
+
+            increase = () => {
+                this.state.counter++; this.update();
+            }
+
+            decrease = () => {
+                this.state.counter--; this.update();
+            }
+
+            update = () => this.textView.setValue(this.state.counter);
+
+            render() {
+                return (
+                    <div className="row">
+                        <div className="col-8 offset-2">
+                            <div className="row">
+                                <div className="col-6 offset-3 p-3">
+                                    <Text ref={this.getTextView} />
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-6 p-2">
+                                    <Button handleClik={this.increase} text="Increase" bootstrapClass="btn-primary" />
+                                </div>
+                                <div className="col-6 p-2">
+                                    <Button handleClik={this.decrease} text="Decrease" bootstrapClass="btn-danger" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        class MyPage extends React.Component {
+            constructor(props) {
+                super(props);
+                
+                const {pageTitle} = props;
+                this.pageTitle = pageTitle;
+            }
+
+            render() {
+                return (
+                    <div className="row justify-content-md-center">
+                        <div className="col-md-10 offset-md-1">
+                            <h1>{this.pageTitle}</h1>
+                            <hr/>
+                            <div className="row mt-5">
+                                <div className="col-12">
+                                    <BasicCounter />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        const root = ReactDOM.createRoot(document.querySelector('#container'));
+        root.render(<MyPage pageTitle="Basic counter" />);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    </body>
+    </html>
